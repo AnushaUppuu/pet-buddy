@@ -1,4 +1,5 @@
-import React from 'react';
+import {useNavigation} from '@react-navigation/native';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   Modal,
@@ -9,19 +10,21 @@ import {
 } from 'react-native';
 
 function Starting() {
+  const nav = useNavigation<any>();
+  const [modalvisble, setModalVisible] = useState(true);
   return (
     <View style={styles.mainContainer}>
       <Image
-      testID='pet-image'
+        testID="pet-image"
         style={styles.image}
         source={{
           uri: 'https://assets-au-01.kc-usercontent.com/1f0619a0-4164-0241-3335-de16f4a2d9f3/b03078fb-e2c9-4967-932f-fb082a06bf47/article-best-dog-breeds-families-golden-retriever.jpg',
         }}
       />
       <Modal
-        testID='modal'
+        testID="modal"
         animationType={'slide'}
-        visible={true}
+        visible={modalvisble}
         transparent={true}
         style={{flex: 1, backgroundColor: 'green'}}>
         <View style={styles.modal}>
@@ -30,7 +33,13 @@ function Starting() {
             <Text style={styles.level2Text}>
               While you sit and stay - we'll go out and play
             </Text>
-            <TouchableOpacity style={styles.startButtonContainer} testID='start-button'>
+            <TouchableOpacity
+              style={styles.startButtonContainer}
+              testID="start-button"
+              onPress={() => {
+                setModalVisible(false);
+                nav.navigate('Login');
+              }}>
               <Text style={styles.startButton}>Get Started</Text>
             </TouchableOpacity>
           </View>
@@ -76,9 +85,9 @@ const styles = StyleSheet.create({
     flex: 0.2,
     width: '100%',
     alignSelf: 'center',
-    borderWidth:2,
-    borderRadius:10,
-    borderColor:'floralwhite'
+    borderWidth: 2,
+    borderRadius: 10,
+    borderColor: 'floralwhite',
   },
   boldText: {
     fontWeight: 'bold',
