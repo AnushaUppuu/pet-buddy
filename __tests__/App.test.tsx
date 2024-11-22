@@ -11,7 +11,33 @@ import {it} from '@jest/globals';
 
 // Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
+import {render} from '@testing-library/react-native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {NavigationContainer} from '@react-navigation/native';
+jest.mock('@react-navigation/native-stack', () => ({
+  createNativeStackNavigator: jest.fn().mockImplementation(() => ({
+    Navigator: jest.fn(),
+  })),
+}));
+const mockedNavigate = jest.fn();
+const mockedGoBack = jest.fn();
 
+jest.mock('@react-navigation/native', () => {
+  const actualNav = jest.requireActual('@react-navigation/native');
+  return {
+    ...actualNav,
+    useNavigation: () => ({
+      navigate: mockedNavigate,
+      dispatch: jest.fn(),
+      goBack: mockedGoBack,
+    }),
+    useRoute: jest.fn(),
+  };
+});
 it('renders correctly', () => {
-  renderer.create(<App />);
+  render(
+
+      <App />
+ 
+  );
 });
