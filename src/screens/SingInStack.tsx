@@ -9,7 +9,7 @@ import Training from './Training';
 function SingInStack() {
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen name="Home" component={Home} options={{headerShown:false}}/>
       <Tab.Screen name="Service" component={Service} />
       <Tab.Screen name="Training" component={Training} />
     </Tab.Navigator>
