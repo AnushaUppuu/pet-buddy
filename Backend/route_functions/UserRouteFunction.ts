@@ -26,3 +26,15 @@ export const getSingleUser=async(req:Request,res:Response):Promise<any>=>{
     res.status(500).send("Database error");
    }
 }
+export const loginUser=async(req:Request,res:Response):Promise<any>=>{
+    try{
+        const searchUser=await user.findOne({$and:[{username:req.body.username},{password:req.body.password}]})
+        if(searchUser){
+            res.status(200).send("Login successfully");
+        }else{
+            res.status(404).send("User not found");
+        }
+    }catch(e){
+        res.status(500).send("Database error");
+    }
+}
