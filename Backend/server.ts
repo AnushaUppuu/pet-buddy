@@ -2,11 +2,15 @@ import {connection} from './connection';
 import express from 'express';
 const app = express();
 import userRoutes from './routes/user_routes';
+app.use(express.json());
 async function main() {
-  await connection();
-  app.use('/users',userRoutes);
-  app.listen(4000, () => {
-    console.log('Backend is running on the 4000 port');
-  });
+  app.use('/users', userRoutes);
+  if (process.env.NODE_ENV !== 'test') {
+    await connection();
+    app.listen(4000, () => {
+      console.log('Server running on port 4000');
+    });
+  }
 }
+export {app};
 main();
