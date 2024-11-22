@@ -2,15 +2,16 @@ import express from 'express';
 import {
   createUser,
   getSingleUser,
+  loginUser,
 } from '../../Backend/route_functions/UserRouteFunction';
 import request from 'supertest';
-const app = express();
+import {app} from '../../Backend/server';
 jest.mock('../../Backend/route_functions/UserRouteFunction', () => ({
   createUser: jest.fn(),
   getSingleUser: jest.fn(),
+  loginUser: jest.fn(),
 }));
-app.post('/users/register', createUser);
-app.get('/users/getSingleUser/:username', getSingleUser);
+
 describe('create user', () => {
   it('Should return the success when the user created', async () => {
     (createUser as jest.Mock).mockImplementation((req, res) => {
@@ -65,5 +66,31 @@ describe('get single user', () => {
     const result = await request(app).get('/users/getSingleUser/Anusha');
     expect(result.status).toBe(500);
     expect(result.text).toBe('Database error');
+  });
+});
+describe('Login', () => {
+  it('user login successfully upon entering the correct details', async () => {
+    (loginUser as jest.Mock).mockImplementation((req, res) => {
+      res.status(200).send('Login successfully');
+    });
+    const result = await request(app).post('/users/login');
+    expect(result.status).toBe(200);
+    expect(result.text).toBe('Login successfully');
+  });
+  it('return error message when error occurs', async () => {
+    (loginUser as jest.Mock).mockImplementation((req, res) => {
+      res.status(500).send('Database error');
+    });
+    const result = await request(app).post('/users/login');
+    expect(result.status).toBe(500);
+    expect(result.text).toBe('Database error');
+  });
+  it('return error message when the user not found', async () => {
+    (loginUser as jest.Mock).mockImplementation((req, res) => {
+      res.status(404).send('User not found');
+    });
+    const result = await request(app).post('/users/login');
+    expect(result.status).toBe(404);
+    expect(result.text).toBe('User not found');
   });
 });
