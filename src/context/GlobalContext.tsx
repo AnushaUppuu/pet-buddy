@@ -6,9 +6,9 @@ type TGlobal = {
   petname: string;
   setPetName: React.Dispatch<React.SetStateAction<string>>;
 };
-const GlobalContext = createContext<TGlobal>({} as TGlobal);
+export const GlobalContext = createContext<TGlobal>({} as TGlobal);
 
-export const GlobalContextProvider: React.FC = ({children}: any) => {
+export const GlobalContextProvider = ({children}:any) => {
   const [username, setUsername] = useState('');
   const [petname, setPetName] = useState('');
   return (
