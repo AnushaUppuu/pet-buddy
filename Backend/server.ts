@@ -2,9 +2,11 @@ import {connection} from './connection';
 import express from 'express';
 const app = express();
 import userRoutes from './routes/user_routes';
+import petRoutes from './routes/pet_routes';
 app.use(express.json());
 async function main() {
   app.use('/users', userRoutes);
+  app.use('/pets',petRoutes);
   if (process.env.NODE_ENV !== 'test') {
     await connection();
     app.listen(4000, () => {

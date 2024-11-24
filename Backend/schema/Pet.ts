@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { model } from 'mongoose';
 import {ActivitySchema} from './Activity';
 import {Remainder} from './Remainder';
 
@@ -22,3 +22,4 @@ const PetSchema = new mongoose.Schema({
   profileImage:{type:String},
   gallery: [{type: String}],
 });
+export const pet=model('pet',PetSchema)
