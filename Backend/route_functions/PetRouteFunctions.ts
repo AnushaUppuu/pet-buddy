@@ -21,4 +21,17 @@ export const createPet = async (req: Request, res: Response): Promise<any> => {
     res.status(500).send('Error while creating');
   }
 };
-''
+export const getAllPets = async (req: Request, res: Response): Promise<any> => {
+  const {username} = req.params;
+  try {
+    const searchUser = await user.findOne({username: username});
+    if (searchUser) {
+      const result = await pet.find({owner: searchUser._id});
+      res.status(200).json(result);
+    } else {
+      res.status(404).send('User not found');
+    }
+  } catch (e) {
+    res.status(500).send('Database error');
+  }
+};
