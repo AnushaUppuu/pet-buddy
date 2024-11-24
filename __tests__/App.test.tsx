@@ -17,8 +17,16 @@ import {NavigationContainer} from '@react-navigation/native';
 jest.mock('@react-navigation/native-stack', () => ({
   createNativeStackNavigator: jest.fn().mockImplementation(() => ({
     Navigator: jest.fn(),
+    Screen:jest.fn()
   })),
 }));
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs"
+jest.mock('@react-navigation/bottom-tabs',()=>({
+   createBottomTabNavigator:jest.fn().mockImplementation(()=>({
+    Navigator:jest.fn(),
+    Screen:jest.fn()
+   }))
+}))
 const mockedNavigate = jest.fn();
 const mockedGoBack = jest.fn();
 
