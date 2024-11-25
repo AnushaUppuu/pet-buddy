@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react-native"
+import { fireEvent, render, screen, waitFor } from "@testing-library/react-native"
 import MyPets from "../../src/components/MyPets"
 const mockedNavigate = jest.fn();
 const mockedGoBack = jest.fn();
@@ -17,6 +17,16 @@ jest.mock('@react-navigation/native', () => {
 });
 describe("MyPet component",()=>{
     beforeEach(()=>{
+      const value=[{
+        name:"Cooper",
+        age:"4yrs"
+      }];
+      global.fetch = jest.fn(() =>
+        Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve(value),
+        }),
+      ) as jest.Mock;
         render(<MyPets/>)
     })
     it("Renders correctly all the elements",()=>{
@@ -33,5 +43,10 @@ describe("MyPet component",()=>{
     it("Navigate to the add pet screen upon clicking the add pet icon",()=>{
         fireEvent.press(screen.getByTestId('addPet-button'));
         expect(mockedNavigate).toHaveBeenCalledWith('AddPet')
+    })
+    it("Renders the pets",async()=>{
+      waitFor(()=>{
+        expect(screen.getByTestId('flat-list-pets')).toBeTruthy();
+      })
     })
 })
