@@ -1,10 +1,11 @@
 import { app } from "../../Backend/server";
 import express from 'express';
 import request from 'supertest';
-import { createPet, getAllPets } from "../../Backend/route_functions/PetRouteFunctions";
+import { createPet, getAllPets, getSinglePet } from "../../Backend/route_functions/PetRouteFunctions";
 jest.mock('../../Backend/route_functions/PetRouteFunctions',()=>({
     createPet:jest.fn(),
     getAllPets:jest.fn(),
+    getSinglePet:jest.fn(),
 }))
 describe("Create pet route",()=>{
     it("Should return success message upon adding pet to the database successfully",async()=>{
@@ -70,5 +71,43 @@ describe("Get all pets",()=>{
         const result=await request(app).get('/pets/getAllPets/Anusha_uppu');
         expect(result.status).toBe(404);
         expect(result.text).toBe("User not found")
+    })
+})
+describe("Get single Pet",()=>{
+    it("return the pet data",async()=>{
+        const value={
+            name:"Cooper",
+            age:"4yrs"
+        };
+        (getSinglePet as jest.Mock).mockImplementation((req,res)=>{
+            res.status(200).json(value);
+        })
+        const result=await request(app).get('/pets/getSinglePet/Anusha_uppu/Cooper');
+        expect(result.status).toBe(200);
+        expect(result.body).toEqual(value);
+    })
+    it("return database error when error occurs",async()=>{
+        (getSinglePet as jest.Mock).mockImplementation((req,res)=>{
+            res.status(500).send("Database error")
+        })
+        const result=await request(app).get('/pets/getSinglePet/Anusha_uppu/Cooper');
+        expect(result.status).toBe(500);
+        expect(result.text).toBe("Database error")
+    })
+    it("return error message when user not found",async()=>{
+        (getSinglePet as jest.Mock).mockImplementation((req,res)=>{
+            res.status(404).send("User not found")
+        })
+        const result=await request(app).get('/pets/getSinglePet/Anusha_uppu/Cooper');
+        expect(result.status).toBe(404);
+        expect(result.text).toBe("User not found")
+    })
+    it("return error message when pet not found",async()=>{
+        (getSinglePet as jest.Mock).mockImplementation((req,res)=>{
+            res.status(400).send("Pet not found")
+        })
+        const result=await request(app).get('/pets/getSinglePet/Anusha_uppu/Cooper');
+        expect(result.status).toBe(400);
+        expect(result.text).toBe("Pet not found")
     })
 })
