@@ -35,3 +35,26 @@ export const getAllPets = async (req: Request, res: Response): Promise<any> => {
     res.status(500).send('Database error');
   }
 };
+export const getSinglePet = async (
+  req: Request,
+  res: Response,
+): Promise<any> => {
+  const {username, petname} = req.params;
+  try {
+    const searchUser = await user.findOne({username: username});
+    if (searchUser) {
+      const petDetails = await pet.findOne({
+        $and: [{name: petname}, {owner: searchUser._id}],
+      });
+      if (petDetails) {
+        res.status(200).json(petDetails);
+      } else {
+        res.status(400).send('Pet not found');
+      }
+    } else {
+      res.status(404).send('User not found');
+    }
+  } catch (e) {
+    res.status(500).send('Database error');
+  }
+};
