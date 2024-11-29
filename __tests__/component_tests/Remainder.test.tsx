@@ -37,4 +37,11 @@ describe("Remainder component",()=>{
         expect(screen.getByTestId('flat-list-container')).toBeTruthy()
       
     })
+    it("Flat list rendering",()=>{
+        waitFor(()=>{
+            expect(screen.getByTestId('flat-list')).toBeTruthy();
+            expect(screen.getByTestId('each-remainder')).toBeTruthy();
+          })
+        
+    })
 })
