@@ -44,7 +44,7 @@ function Remainder() {
         <FlatList
          testID='flat-list'
          data={petdata.remainder}
-         renderItem={(item)=><EachRemainder remainder={item}/>}
+         renderItem={(item)=><EachRemainder testID="each-remainder" remainder={item}/>}
          keyExtractor={(item,index)=>index.toString()}
         />}
       </View>
