@@ -4,7 +4,7 @@
 <dict>
  <key>UIUserNotificationUsageDescription</key>
  <string>We need access to send you notifications</string>
-<key>NSPhotoLibraryUsageDescription</key>
+<key>NSPhotoLibraryAddUsageDescription</key>
 <string>$(PetBuddy) would like to upload photos from your photo gallery</string>
 <key>NSCameraUsageDescription</key>
 <string>$(PetBuddy) requires to access camera for uploading photos to your profile or posts</string>
