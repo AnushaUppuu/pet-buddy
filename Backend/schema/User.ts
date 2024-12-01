@@ -17,5 +17,8 @@ const userSChema = new mongoose.Schema({
   profile_picture: {
     type: String,
   },
+  address:{
+    type:String,
+  }
 });
 export const user = model('user', userSChema);
