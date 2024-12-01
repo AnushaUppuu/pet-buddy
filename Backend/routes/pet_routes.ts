@@ -1,7 +1,8 @@
 import express from 'express';
-import { createPet, getAllPets, getSinglePet } from '../route_functions/PetRouteFunctions';
+import { addRemainder, createPet, getAllPets, getSinglePet } from '../route_functions/PetRouteFunctions';
 const router=express.Router();
 router.post('/addPet',createPet);
 router.get('/getAllPets/:username',getAllPets);
 router.get('/getSinglePet/:username/:petname',getSinglePet);
+router.post('/addRemainder/:username/:petname',addRemainder);
 export default router
