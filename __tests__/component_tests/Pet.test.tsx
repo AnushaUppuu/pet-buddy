@@ -2,7 +2,9 @@ import { render, screen } from "@testing-library/react-native"
 import { GlobalContextProvider } from "../../src/context/GlobalContext"
 import Pet from "../../src/components/Pet"
 import IIcon from 'react-native-vector-icons/Ionicons';
+import FIcon from 'react-native-vector-icons/Feather';
 jest.mock('react-native-vector-icons/Ionicons',()=>'IIcon')
+jest.mock('react-native-vector-icons/Feather',()=>'FIcon')
 const mockedNavigate = jest.fn();
 const mockedGoBack = jest.fn();
 
