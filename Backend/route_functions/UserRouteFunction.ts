@@ -2,14 +2,18 @@ import express, {Request,Response} from 'express'
 import { user } from '../schema/User'
 export const createUser=async(req:Request,res:Response):Promise<any>=>{
     try{
+        console.log(req.body);
         const searchUser=await user.findOne({username:req.body.username});
         if(searchUser){
-            await user.create(req.body);
-            res.status(200).send("User successfully added");
-        }else{
             res.status(202).send("Username already exists");
+        }else{
+           
+            await user.create(req.body);
+            console.log("Created");
+            res.status(200).send("User successfully added");
         }
     }catch(e){
+        console.log(e);
         res.status(500).send("Error while creation")
     }
 }
