@@ -8,3 +8,6 @@ export async function connection() {
     console.log('Unable to connect');
   }
 }
+export async function closeConnection() {
+  await mongoose.connection.close();
+}
