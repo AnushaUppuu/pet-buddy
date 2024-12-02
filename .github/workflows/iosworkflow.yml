@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - version-I
-  pull-request:
+  pull_request:
     branches:
       - master
 
@@ -20,6 +20,8 @@ jobs:
           node-version: '18'
       - name: Install Cocoapods
         run: sudo gem install cocoapods
+       - name: Clean Xcode Derived Data
+         run: rm -rf ~/Library/Developer/Xcode/DerivedData/*
       - name: Install Dependencies for iOS
         run: |
           npm install
