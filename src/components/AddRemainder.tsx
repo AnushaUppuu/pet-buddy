@@ -43,7 +43,11 @@ function AddRemainder({modalVisible, setModalVisible}: any) {
      console.log(value3);
       setActivity(value3);
       setActivityName(activitytemp);
-      setTimePeriod("8PM-9PM");
+      const fromsend=from.getHours().toString().concat("-");
+      const tosend=to.getHours().toString();
+      const resultString=fromsend.concat(tosend);
+      console.log(resultString);
+      setTimePeriod(resultString);
     console.log('triggered');
     const value2 = {
       name: activitytemp,

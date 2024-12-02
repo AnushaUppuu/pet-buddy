@@ -25,6 +25,7 @@ function AddPet() {
   const [profile, setProfile] = useState<any>();
   const {username, petname} = useContext(GlobalContext);
   const pickPicture = () => {
+    
     ImageCropPicker.openPicker({
       width: 300,
       height: 400,
