@@ -23,6 +23,7 @@
 # Start the Application:
  1. Install the dependencies
   - ```npm install```
+  - To set up the vector icons follow this link:https://www.npmjs.com/package/react-native-vector-icons
 2. For ios:
  -  ```cd ios && pod install```
 3. Configure the metro:
@@ -40,3 +41,21 @@
     #or
     npx react-native run-android
   ```
+## Features:
+ 1. The application ca handle the multiple users.
+ 2. One user can contain many pets.
+ 3. There will be a gallery for the pet and user can add images to the gallery.
+ 4. The user can add the remainders for pet and notification will be sent to the user at that time. Once the user click on the notification it will be added to the activities.
+ 5. User can view their details. 
+
+ # UI images:
+ ## Starting screen:
+ ![alt text](<Simulator Screenshot - Anu - 2024-12-02 at 16.27.40.png>)
+ ## Pet details screen
+ ![alt text](<Simulator Screenshot - Anu - 2024-12-02 at 16.28.13.png>)
+
+## Services screen
+![alt text](<Simulator Screenshot - Anu - 2024-12-02 at 16.28.35.png>)
+
+## Trainings screen.
+![alt text](<Simulator Screenshot - Anu - 2024-12-02 at 16.32.13.png>)
