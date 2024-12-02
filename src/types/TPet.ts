@@ -8,12 +8,12 @@ export type TPet={
     height:String,
     color:String,
     breed:String,
-    petImage:String,
+    profileImage:String,
     emergencyContact:String,
     remarks?:String,
     gender:String,
     category:String,
     activity?:[TActivity],
-    remainder?:[TRemainder],
+    remainders?:[TRemainder],
     gallery?:[String]
 }

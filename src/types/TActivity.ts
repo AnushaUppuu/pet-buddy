@@ -1,4 +1,4 @@
 export type TActivity={
-    name:String,
-    timePeriod:String,
+    name:string,
+    timePeriod:string,
 }
