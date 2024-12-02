@@ -5,6 +5,7 @@ import AIcon from 'react-native-vector-icons/AntDesign';
 import { Dropdown } from "react-native-element-dropdown";
 import DatePicker from "react-native-date-picker";
 import DateTimePicker from '@react-native-community/datetimepicker';
+import notifee, {EventType, TimestampTrigger, TriggerType}  from '@notifee/react-native';
 import DateTimePickerModal from 'react-native-modal-datetime-picker'
 jest.mock('react-native-vector-icons/AntDesign',()=>'AIcon');
 jest.mock('react-native-element-dropdown',()=>({
@@ -18,6 +19,14 @@ jest.mock('@react-native-community/datetimepicker',()=>({
 }))
 jest.mock('react-native-modal-datetime-picker',()=>({
     DateTimePickerModal:jest.fn(),
+}))
+jest.mock('@notifee/react-native',()=>({
+    notifee:{
+        onBackgroundEvent:jest.fn(),
+    },
+    EventType:jest.fn(),
+    TimestampTrigger:jest.fn(),
+    TriggerType:jest.fn(),
 }))
 describe("Remainder component",()=>{
     beforeEach(()=>{
