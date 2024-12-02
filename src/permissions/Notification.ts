@@ -7,6 +7,8 @@ export async function onDisplayNotification(
   remainderdate: Date,
   hours: number,
   minutes: number,
+  activityname:string,
+  petname:string,
 ) {
   await notifee.requestPermission();
 
@@ -34,8 +36,8 @@ export async function onDisplayNotification(
   };
   await notifee.createTriggerNotification(
     {
-      title: 'Notification Title',
-      body: 'Main body content of the notification',
+      title: 'PetBuddy',
+      body: `${petname}'s ${activityname} time`,
       android: {channelId, actions},
       ios: {
         categoryId: 'interactive',
