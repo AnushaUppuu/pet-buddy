@@ -22,5 +22,7 @@ jobs:
           npm install
           cd ios
           pod install
+      - name: Check Xcode version
+        run: xcodebuild -version
       - name: Build on iOS
         run: npx react-native build-ios
