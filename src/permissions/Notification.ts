@@ -44,12 +44,3 @@ export async function onDisplayNotification(
     trigger,
   );
 }
-export const notificationTriggered = notifee.onBackgroundEvent(
-  async ({type, detail}) => {
-    if (type == EventType.ACTION_PRESS) {
-      if (detail.pressAction?.id == 'accept') {
-        console.log('Pressed');
-      }
-    }
-  },
-);
