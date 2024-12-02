@@ -66,7 +66,7 @@ function AddRemainder({modalVisible, setModalVisible}: any) {
     if (result.ok) {
       Alert.alert('Remainder added');
       setTriggered(false);
-      onDisplayNotification(date, from.getHours(), from.getMinutes());
+      onDisplayNotification(date, from.getHours(), from.getMinutes(),activitytemp,petname);
     }
     setModalVisible(false);
   }
