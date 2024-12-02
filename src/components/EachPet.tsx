@@ -12,7 +12,7 @@ function EachPet({pet}: any) {
       <TouchableOpacity testID='pet-image' onPress={()=>{
         setPetName(pet.item.name);
         nav.navigate('Pet')}}>
-        <Image style={styles.image} source={{uri: pet.item.petImage}} />
+        <Image style={styles.image} source={{uri:`data:image/jpeg;base64,${pet.item.profileImage}`}} />
       </TouchableOpacity>
       <View style={styles.details}>
         <Text testID='name' style={styles.name}>{pet.item.name}</Text>
@@ -25,7 +25,6 @@ const styles = StyleSheet.create({
   mainContainer: {
     display: 'flex',
     flexDirection: 'row',
-    // justifyContent:'center',
     padding: 10,
   },
   image: {
