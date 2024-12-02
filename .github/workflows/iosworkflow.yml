@@ -15,12 +15,11 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'
-      - name: Install Dependencies
-        run: npm install
       - name: Install Cocoapods
         run: sudo gem install cocoapods
       - name: Install Dependencies for iOS
         run: |
+          npm install
           cd ios
           pod install
       - name: Build on iOS
