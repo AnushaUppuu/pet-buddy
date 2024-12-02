@@ -25,4 +25,4 @@ jobs:
             pod install
 
     - name: Build the ios
-      run:  npx react-native build-ios  
+      run:  CI=false npx react-native build-ios  
