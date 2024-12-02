@@ -1,0 +1,28 @@
+name: PetBuddy-ios
+on:
+ push:
+  branches:
+    - version-I
+ pull_request:
+   branches:
+    -main
+jobs:
+  build:
+   runs-on: macos-latest
+   steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Set up Node.js
+      uses : actions/setup-node@v2
+      with: 
+       node-version: '18'
+    - name: Install cocoapods
+      run: sudo gem install cocoapods
+    - name: Install the dependencies
+      run: |
+            npm install
+            cd ios
+            pod install
+
+    - name: Build the ios
+      run:  npx react-native build-ios  
