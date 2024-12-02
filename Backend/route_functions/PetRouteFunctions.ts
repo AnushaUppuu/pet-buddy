@@ -94,6 +94,7 @@ export const addRemainder=async(req:Request,res:Response):Promise<any>=>{
 }
 export const addActivity=async(req:Request,res:Response):Promise<any>=>{
   const {username,petname}=req.params;
+  console.log(req.body);
   try{
     const searchUser = await user.findOne({username: username});
     if(searchUser){
