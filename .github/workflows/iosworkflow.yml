@@ -6,16 +6,20 @@ on:
       - version-I
 
 jobs:
-  build-and-test:
+  build:
     runs-on: macos-latest
-    name: check workflow
     steps:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: '18'
+      -name: Cache node modules
+       uses: actions/cache@v3
+       with: 
+         path: node_modules
+         key: ${{runner.os}} - node-${{hashFiles('**/package-lock.json')}}
       - name: Install Dependencies
         run: npm install
       - name: Install Cocoapods
