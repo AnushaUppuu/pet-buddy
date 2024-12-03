@@ -147,3 +147,37 @@ describe("Add remainder",()=>{
         expect(result.text).toBe("Error while adding");
     })
 })
+describe("Add activity",()=>{
+    it("should return the success message",async()=>{
+        (addActivity as jest.Mock).mockImplementation((req,res)=>{
+            res.status(200).send("Activity added successfully")
+        })
+        const result=await request(app).post('/pets/addActivity/Anusha_uppu/Cooper').send({});
+        expect(result.status).toBe(200);
+        expect(result.text).toBe("Activity added successfully");
+    })
+    it("should return the pet not found message",async()=>{
+        (addActivity as jest.Mock).mockImplementation((req,res)=>{
+            res.status(201).send("Pet not found")
+        })
+        const result=await request(app).post('/pets/addActivity/Anusha_uppu/Cooper').send({});
+        expect(result.status).toBe(201);
+        expect(result.text).toBe("Pet not found");
+    })
+    it("should return the user not found message",async()=>{
+        (addActivity as jest.Mock).mockImplementation((req,res)=>{
+            res.status(404).send("User not found")
+        })
+        const result=await request(app).post('/pets/addActivity/Anusha_uppu/Cooper').send({});
+        expect(result.status).toBe(404);
+        expect(result.text).toBe("User not found");
+    })
+    it("should return the error message",async()=>{
+        (addActivity as jest.Mock).mockImplementation((req,res)=>{
+            res.status(500).send("Error while adding")
+        })
+        const result=await request(app).post('/pets/addActivity/Anusha_uppu/Cooper').send({});
+        expect(result.status).toBe(500);
+        expect(result.text).toBe("Error while adding");
+    })
+})
