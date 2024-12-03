@@ -14,6 +14,20 @@ jest.mock('react-native-vector-icons/Ionicons',()=>'IIcon');
 jest.mock('react-native-vector-icons/AntDesign',()=>'AIcon');
 jest.mock('react-native-vector-icons/Feather',()=>'FIcon');
 import ImageCropPicker, { openPicker } from 'react-native-image-crop-picker';
+import notifee, {
+    EventType,
+    TimestampTrigger,
+    TriggerType,
+  } from '@notifee/react-native';
+jest.mock('@notifee/react-native', () => ({
+   
+    onForegroundEvent: jest.fn(),
+    EventType: {
+      ACTION_PRESS: 'action_press',
+    },
+    TimestampTrigger: jest.fn(),
+    TriggerType: jest.fn(),
+  }));
 jest.mock('react-native-image-crop-picker',()=>({
     ImageCropPicker:jest.fn(),
     openPicker:jest.fn(),
@@ -33,6 +47,12 @@ jest.mock('@react-navigation/native-stack',()=>({
         Screen:jest.fn(),
     }))
 }))
+global.fetch = jest.fn(() =>
+    Promise.resolve({
+      ok: true,
+      json: () => Promise.resolve({success: true}),
+    }),
+  ) as jest.Mock;
 describe("Home component",()=>{
     it("render the elements correctly",()=>{
         render(
