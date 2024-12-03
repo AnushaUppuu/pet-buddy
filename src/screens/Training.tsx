@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 function Training() {
   const data=[
@@ -21,7 +21,10 @@ function Training() {
           return(
             <View style={styles.container}>
               <Text style={styles.name} testID='resource-name'>{resource.name}</Text>
+              <TouchableOpacity onPress={()=>  Linking.openURL(`${resource.Link}`)}>
               <Text style={styles.link} testID='link'>{resource.Link}</Text>
+              </TouchableOpacity>
+              
               </View>
           )
         })}
