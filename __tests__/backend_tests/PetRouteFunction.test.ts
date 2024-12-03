@@ -314,7 +314,7 @@ describe("Add activity",()=>{
     (user.findOne as jest.Mock).mockReturnValue({username:"Anusha"});
     (pet.findOne as jest.Mock).mockRejectedValue(null)
   
-    await addRemainder(mockRequest as Request, mockResponse as Response);
+    await addActivity(mockRequest as Request, mockResponse as Response);
     expect(mockResponse.status).toHaveBeenCalledWith(500)
     expect(mockSend).toHaveBeenCalledWith("Error while adding");
   })
