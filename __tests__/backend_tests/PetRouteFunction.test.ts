@@ -1,4 +1,4 @@
-import {addRemainder, createPet, getAllPets, getSinglePet} from '../../Backend/route_functions/PetRouteFunctions';
+import {addActivity, addRemainder, createPet, getAllPets, getSinglePet} from '../../Backend/route_functions/PetRouteFunctions';
 import {user} from '../../Backend/schema/User';
 import mongoose from 'mongoose';
 jest.mock('../../Backend/schema/User', () => ({
@@ -241,6 +241,68 @@ describe("Add remainder route function",()=>{
     (user.findOne as jest.Mock).mockReturnValue(null);
 
     await addRemainder(mockRequest as Request, mockResponse as Response);
+    expect(mockResponse.status).toHaveBeenCalledWith(404)
+    expect(mockSend).toHaveBeenCalledWith("User not found");
+  })
+  it("Return the error message",async()=>{
+    mockRequest={
+       body:{name:"Walking"},
+       params:{username:"Anusha_uppu",petname:"Cooper"}
+    };
+    (user.findOne as jest.Mock).mockReturnValue({username:"Anusha"});
+    (pet.findOne as jest.Mock).mockRejectedValue(null)
+  
+    await addRemainder(mockRequest as Request, mockResponse as Response);
+    expect(mockResponse.status).toHaveBeenCalledWith(500)
+    expect(mockSend).toHaveBeenCalledWith("Error while adding");
+  })
+})
+describe("Add activity",()=>{
+  let mockRequest:Partial<Request>
+  let mockResponse:Partial<Response>
+  let mockSend:jest.Mock;
+  let mockBody:jest.Mock;
+  beforeEach(()=>{
+   mockSend=jest.fn();
+   const value={
+    name:"Cooper",
+    age:"4yrs"
+  };
+  mockBody=jest.fn().mockReturnValue(value);
+   mockResponse={status:jest.fn().mockReturnThis(),send:mockSend,json:mockBody}
+
+  })
+  it("Return the success message",async()=>{
+    mockRequest={
+       body:{name:"Walking"},
+       params:{username:"Anusha_uppu",petname:"Cooper"}
+    };
+    (user.findOne as jest.Mock).mockReturnValue({username:"Anusha"});
+    (pet.findOne as jest.Mock).mockReturnValue({_id:"123"})
+    await addActivity(mockRequest as Request, mockResponse as Response);
+    expect(mockResponse.status).toHaveBeenCalledWith(200)
+    expect(mockSend).toHaveBeenCalledWith("Activity added successfully");
+  })
+  it("Return the pet not found message",async()=>{
+    mockRequest={
+       body:{name:"Walking"},
+       params:{username:"Anusha_uppu",petname:"Cooper"}
+    };
+    (user.findOne as jest.Mock).mockReturnValue({username:"Anusha"});
+    (pet.findOne as jest.Mock).mockReturnValue(null)
+    // (pet.updateOne as jest.Mock).mockReturnValue({});
+    await addActivity(mockRequest as Request, mockResponse as Response);
+    expect(mockResponse.status).toHaveBeenCalledWith(201)
+    expect(mockSend).toHaveBeenCalledWith("Pet not found");
+  })
+  it("Return the user not found message",async()=>{
+    mockRequest={
+       body:{name:"Walking"},
+       params:{username:"Anusha_uppu",petname:"Cooper"}
+    };
+    (user.findOne as jest.Mock).mockReturnValue(null);
+
+    await addActivity(mockRequest as Request, mockResponse as Response);
     expect(mockResponse.status).toHaveBeenCalledWith(404)
     expect(mockSend).toHaveBeenCalledWith("User not found");
   })
