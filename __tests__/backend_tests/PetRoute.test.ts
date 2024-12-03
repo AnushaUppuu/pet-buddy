@@ -1,11 +1,13 @@
 import { app } from "../../Backend/server";
 import express from 'express';
 import request from 'supertest';
-import { createPet, getAllPets, getSinglePet } from "../../Backend/route_functions/PetRouteFunctions";
+import { addActivity, addRemainder, createPet, getAllPets, getSinglePet } from "../../Backend/route_functions/PetRouteFunctions";
 jest.mock('../../Backend/route_functions/PetRouteFunctions',()=>({
     createPet:jest.fn(),
     getAllPets:jest.fn(),
     getSinglePet:jest.fn(),
+    addRemainder:jest.fn(),
+    addActivity:jest.fn(),
 }))
 describe("Create pet route",()=>{
     it("Should return success message upon adding pet to the database successfully",async()=>{
@@ -109,5 +111,39 @@ describe("Get single Pet",()=>{
         const result=await request(app).get('/pets/getSinglePet/Anusha_uppu/Cooper');
         expect(result.status).toBe(400);
         expect(result.text).toBe("Pet not found")
+    })
+})
+describe("Add remainder",()=>{
+    it("Should return the success message",async()=>{
+        (addRemainder as jest.Mock).mockImplementation((req,res)=>{
+            res.status(200).send("Remainder added successfully")
+        })
+        const result=await request(app).post('/pets/addRemainder/Anusha_uppu/Cooper').send({});
+        expect(result.status).toBe(200);
+        expect(result.text).toBe("Remainder added successfully");
+    })
+    it("Should return the pet not found message",async()=>{
+        (addRemainder as jest.Mock).mockImplementation((req,res)=>{
+            res.status(201).send("Pet not found")
+        })
+        const result=await request(app).post('/pets/addRemainder/Anusha_uppu/Cooper').send({});
+        expect(result.status).toBe(201);
+        expect(result.text).toBe("Pet not found");
+    })
+    it("Should return the user not found message",async()=>{
+        (addRemainder as jest.Mock).mockImplementation((req,res)=>{
+            res.status(404).send("User not found")
+        })
+        const result=await request(app).post('/pets/addRemainder/Anusha_uppu/Cooper').send({});
+        expect(result.status).toBe(404);
+        expect(result.text).toBe("User not found");
+    })
+    it("Should return the error message",async()=>{
+        (addRemainder as jest.Mock).mockImplementation((req,res)=>{
+            res.status(500).send("Error while adding")
+        })
+        const result=await request(app).post('/pets/addRemainder/Anusha_uppu/Cooper').send({});
+        expect(result.status).toBe(500);
+        expect(result.text).toBe("Error while adding");
     })
 })
