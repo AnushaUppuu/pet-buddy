@@ -27,7 +27,7 @@ jobs:
       - name: Install dependencies
         uses: npm install
       - name: Build on iOS
-        run: npx react-native build-ios
+        run: npx react-native build-android
  
  
  
