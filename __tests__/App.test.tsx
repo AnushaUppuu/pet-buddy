@@ -6,10 +6,8 @@ import 'react-native';
 import React from 'react';
 import App from '../App';
 
-// Note: import explicitly to use the types shipped with jest.
 import {it} from '@jest/globals';
 
-// Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
 import {render} from '@testing-library/react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -30,6 +28,7 @@ import notifee, {
   EventType,
   TimestampTrigger,
   TriggerType,
+  
 } from '@notifee/react-native';
 jest.mock('@react-navigation/native-stack', () => ({
   createNativeStackNavigator: jest.fn().mockImplementation(() => ({
@@ -54,6 +53,9 @@ jest.mock('@notifee/react-native', () => ({
   },
   TimestampTrigger: jest.fn(),
   TriggerType: jest.fn(),
+  notifee:{
+    onForegroundEvent:jest.fn(),
+  }
 }));
 
 jest.mock('react-native-vector-icons/Fontisto', () => 'FTIcon');
@@ -62,7 +64,7 @@ jest.mock('react-native-vector-icons/AntDesign', () => 'AIcon');
 jest.mock('react-native-vector-icons/Feather', () => 'FIcon');
 jest.mock('react-native-vector-icons/Ionicons', () => 'Icon2');
 jest.mock('react-native-vector-icons/FontAwesome', () => 'Icon');
-jest.mock('react-native-vector-icons/MaterialCommunityIcons',()=>'MIcon')
+jest.mock('react-native-vector-icons/MaterialCommunityIcons', () => 'MIcon');
 jest.mock('react-native-element-dropdown', () => ({
   Dropdown: jest.fn(),
 }));
