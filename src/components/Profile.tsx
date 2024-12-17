@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { View,Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
+import { View,Text, Image, StyleSheet, TouchableOpacity, Alert, Platform } from 'react-native'
 import { GlobalContext } from '../context/GlobalContext'
 import { TUser } from '../types/TUser';
 import FTIcon from 'react-native-vector-icons/Fontisto';
@@ -15,7 +15,12 @@ function Profile() {
   const nav=useNavigation<any>();
   useEffect(()=>{
     async function fetching(){
-      const result=await fetch(`http://localhost:4000/users/getSingleUser/${username}`,{
+      let baseurl="http://localhost:4000";
+      if(Platform.OS==="android"){
+        baseurl="http://10.0.2.2:4000"
+      }
+      console.log(baseurl);
+      const result=await fetch(`${baseurl}/users/getSingleUser/${username}`,{
         method:"GET",
         headers:{
           "Content-Type":"application/json",
@@ -23,20 +28,23 @@ function Profile() {
       })
       const value=await result.json();
       setUserData(value);
-      console.log(value);
       setUrl(value.profile_picture);
     }
+    if(username){
+      console.log("yes")
     fetching();
+    console.log(url);
+    }
   },[])
   return (
    <View>
     
-    <Image style={{width:"100%",height:"50%"}} source={{uri:url}} testID='profile-image'/>
+    <Image style={{width:"70%",height:"50%", borderRadius:70, justifyContent:"center",alignSelf:"center"}} source={{uri:userData?.profile_picture?`data:image/jpeg;base64,${userData.profile_picture.toString()}`:""}} testID='profile-image'/>
     <View style={styles.mainDetails}>
       <View style={styles.nameEmail}>
       <Text style={styles.name} testID='Username'>{username}</Text>
-      <Text style={styles.emailNumber} testID='email'><FTIcon name='email' size={20}/> {userData?.emailAddress}</Text>
-      <Text style={styles.emailNumber}testID='phone-number'><IIcon name='call-outline' size={20}/> {userData?.phoneNumber}</Text>
+      <Text style={styles.emailNumber} testID='email'><FTIcon name='email' size={20}/> {userData?.email_address}</Text>
+      <Text style={styles.emailNumber}testID='phone-number'><IIcon name='call-outline' size={20}/> {userData?.phone_number}</Text>
       </View>
       <TouchableOpacity onPress={()=>nav.navigate('SingnedOut')}testID='sign-out' >
         <Text style={styles.signOut}><AIcon name='logout' size={18}/> Sign out</Text>
