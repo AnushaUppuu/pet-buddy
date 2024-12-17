@@ -14,7 +14,9 @@ import { Platform } from 'react-native';
 
 const mockedNavigate = jest.fn();
 const mockedGoBack = jest.fn();
+import { Alert } from 'react-native';
 
+jest.spyOn(Alert, 'alert');
 jest.mock('@react-navigation/native', () => {
   const actualNav = jest.requireActual('@react-navigation/native');
   return {
@@ -77,4 +79,26 @@ describe('Login component', () => {
       },
     );
   });
+  it("should display alert to tryagain",async()=>{
+    global.fetch = jest.fn(() =>
+      Promise.resolve({
+        ok: false,
+        json: () => Promise.reject({success: true}),
+      }),
+    ) as jest.Mock;
+    await waitFor(async () => {
+      fireEvent.changeText(screen.getByTestId('username'), 'Anusha_uppu');
+      fireEvent.changeText(screen.getByTestId('password'), 'anu@123');
+      fireEvent.press(screen.getByTestId('login-button'));
+    });
+    expect(Alert.alert).toHaveBeenCalledWith("Tryagain");
+  })
+  it("should display the please enter the username and password alert in case they are not entered",async()=>{
+   
+    await waitFor(async () => {
+    
+      fireEvent.press(screen.getByTestId('login-button'));
+    });
+    expect(Alert.alert).toHaveBeenCalledWith("Please enter the username and password");
+  })
 });
