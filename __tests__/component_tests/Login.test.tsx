@@ -10,6 +10,7 @@ import {
   GlobalContext,
   GlobalContextProvider,
 } from '../../src/context/GlobalContext';
+import { Platform } from 'react-native';
 
 const mockedNavigate = jest.fn();
 const mockedGoBack = jest.fn();
@@ -61,9 +62,12 @@ describe('Login component', () => {
       fireEvent.changeText(screen.getByTestId('password'), 'anu@123');
       fireEvent.press(screen.getByTestId('login-button'));
     });
-
+    let baseurl="http://localhost:4000";
+     if(Platform.OS=="android"){
+        baseurl="http://10.0.2.2:4000"
+     }
     expect(global.fetch).toHaveBeenCalledWith(
-      'http://localhost:4000/users/login',
+      `${baseurl}/users/login`,
       {
         method: 'POST',
         headers: {
