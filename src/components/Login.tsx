@@ -17,6 +17,7 @@ function Login() {
     const [tempusername,setTempUsername]=useState('');
     const [password,setPassword]=useState('');
     const {username,setUsername}=useContext(GlobalContext);
+    const [showPassword, setShowPassword] = useState(false);
     const value={
       username:tempusername,
       password:password
@@ -37,7 +38,6 @@ function Login() {
 
           if(result.ok){
             setUsername(tempusername);
-            // Alert.alert(`${tempusername} is Logged in successfully`);
             nav.navigate('Loading')
           }
           else{
@@ -50,7 +50,7 @@ function Login() {
   return (
     <View style={styles.maincontainer}>
       <TextInput testID='username' placeholder="Username" style={styles.input} onChangeText={setTempUsername}/>
-      <TextInput testID='password' placeholder="Password" style={styles.input} onChangeText={setPassword} />
+      <TextInput testID='password' placeholder="Password" style={styles.input} onChangeText={setPassword} secureTextEntry={true}/>
       <TouchableOpacity style={styles.loginButton} testID='login-button' onPress={handleLogin}>
         <Text style={styles.logintext}>Login</Text>
       </TouchableOpacity>
