@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useContext, useState } from 'react';
 import {
   Alert,
+  Platform,
   StyleSheet,
   Text,
   TextInput,
@@ -9,6 +10,7 @@ import {
   View,
 } from 'react-native';
 import { GlobalContext } from '../context/GlobalContext';
+import { platform } from 'os';
 
 function Login() {
     const nav=useNavigation<any>();
@@ -20,18 +22,23 @@ function Login() {
       password:password
     }
     async function handleLogin(){
+      let baseurl='http://localhost:4000';
+      if(Platform.OS=="android"){
+        baseurl="http://10.0.2.2:4000"
+      }
        if(tempusername!=""|| password!=""){
-          const result=await fetch(`http://localhost:4000/users/login`,{
+          const result=await fetch(`${baseurl}/users/login`,{
             method:"POST",
             headers:{
               "Content-Type":'application/json'
             },
             body:JSON.stringify(value)
           });
+
           if(result.ok){
             setUsername(tempusername);
-            Alert.alert(`${tempusername} is Logged in successfully`);
-            nav.navigate('SingnedIn')
+            // Alert.alert(`${tempusername} is Logged in successfully`);
+            nav.navigate('Loading')
           }
           else{
             Alert.alert('Tryagain');
