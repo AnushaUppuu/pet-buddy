@@ -1,13 +1,14 @@
 import { app } from "../../Backend/server";
 import express from 'express';
 import request from 'supertest';
-import { addActivity, addRemainder, createPet, getAllPets, getSinglePet } from "../../Backend/route_functions/PetRouteFunctions";
+import { addActivity, addRemainder, addToGallery, createPet, getAllPets, getSinglePet } from "../../Backend/route_functions/PetRouteFunctions";
 jest.mock('../../Backend/route_functions/PetRouteFunctions',()=>({
     createPet:jest.fn(),
     getAllPets:jest.fn(),
     getSinglePet:jest.fn(),
     addRemainder:jest.fn(),
     addActivity:jest.fn(),
+    addToGallery:jest.fn(),
 }))
 describe("Create pet route",()=>{
     it("Should return success message upon adding pet to the database successfully",async()=>{
@@ -177,6 +178,40 @@ describe("Add activity",()=>{
             res.status(500).send("Error while adding")
         })
         const result=await request(app).post('/pets/addActivity/Anusha_uppu/Cooper').send({});
+        expect(result.status).toBe(500);
+        expect(result.text).toBe("Error while adding");
+    })
+})
+describe("Add to Gallery",()=>{
+    it("should return the success message",async()=>{
+        (addToGallery as jest.Mock).mockImplementation((req,res)=>{
+            res.status(200).send("Activity added successfully")
+        })
+        const result=await request(app).post('/pets/petImage/Anusha_uppu/Cooper').send({});
+        expect(result.status).toBe(200);
+        expect(result.text).toBe("Activity added successfully");
+    })
+    it("should return the pet not found message",async()=>{
+        (addToGallery as jest.Mock).mockImplementation((req,res)=>{
+            res.status(403).send("Pet not found")
+        })
+        const result=await request(app).post('/pets/petImage/Anusha_uppu/Cooper').send({});
+        expect(result.status).toBe(403);
+        expect(result.text).toBe("Pet not found");
+    })
+    it("should return the user not found message",async()=>{
+        (addToGallery as jest.Mock).mockImplementation((req,res)=>{
+            res.status(404).send("User not found")
+        })
+        const result=await request(app).post('/pets/petImage/Anusha_uppu/Cooper').send({});
+        expect(result.status).toBe(404);
+        expect(result.text).toBe("User not found");
+    })
+    it("should return the error message",async()=>{
+        (addToGallery as jest.Mock).mockImplementation((req,res)=>{
+            res.status(500).send("Error while adding")
+        })
+        const result=await request(app).post('/pets/petImage/Anusha_uppu/Cooper').send({});
         expect(result.status).toBe(500);
         expect(result.text).toBe("Error while adding");
     })
