@@ -127,3 +127,23 @@ export const addActivity = async (
     res.status(500).send('Error while adding');
   }
 };
+export const addToGallery=async(req:Request, res:Response):Promise<any>=>{
+  const {username,petname}=req.params;
+  console.log(username);
+  try{
+  const searchUser=await user.findOne({username:username});
+  console.log(searchUser);
+  if(!searchUser){
+    return res.status(404).send("User not found");
+  }
+  const searchPet=await pet.findOne({$and:[{name:petname},{owner:searchUser._id}]});
+  if(!searchPet){
+    return res.status(403).send("Pet not found");
+  }
+ 
+    await pet.updateOne({_id:searchPet._id},{$push:{gallery:req.body.petImage}});
+    return res.status(200).send("petImage added successfully");
+  }catch(e){
+    return res.status(500).send("Error while creation");
+  }
+}
