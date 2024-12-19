@@ -8,7 +8,13 @@ async function main() {
   app.use('/users', userRoutes);
   app.use('/pets',petRoutes);
   if (process.env.NODE_ENV !== 'test') {
-    await connection();
+    try{
+      await connection();
+    }catch(e){
+      console.log("Unable to connect",e);
+      throw new Error("connection failed");
+    }
+ 
     app.listen(4000, () => {
       console.log('Server running on port 4000');
     });
