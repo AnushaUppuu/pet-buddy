@@ -1,8 +1,9 @@
 export type TRemainder={
-    name:String,
-    category:String,
-    fromHour:Number,
-    fromMinute:Number,
-    toHour:Number,
-    toMinute:Number
+    name:string,
+    category:string,
+    fromHour:number,
+    fromMinute:number,
+    toHour:number,
+    toMinute:number,
+   
 }
