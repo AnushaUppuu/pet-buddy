@@ -12,15 +12,17 @@ import {Dropdown} from 'react-native-element-dropdown';
 import DatePicker from 'react-native-date-picker';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import {GlobalContext} from '../context/GlobalContext';
-import {onDisplayNotification} from '../permissions/Notification';
-import { TActivity } from '../types/TActivity';
-function AddRemainder({modalVisible, setModalVisible}: any) {
+import { FromDailyNotification, FromMonthlyNotification, FromWeeklyNotification} from '../permissions/FromNotification';
+import { NotificationContext } from '../context/NavigationContext';
+import { TRemainder } from '../types/TRemainder';
+export function AddRemainder({modalVisible, setModalVisible}: any) {
   const data = [
     {label: 'Daily', value: 'Daily'},
     {label: 'Weekly', value: 'Weekly'},
     {label: 'Monthly', value: 'Monthly'},
   ];
-  const {username, petname,setActivity,setActivityName,setTimePeriod,setTriggered} = useContext(GlobalContext);
+  const {username, petname} = useContext(GlobalContext);
+  const {setTimePeriod,} =useContext(NotificationContext);
   const [value, setValue] = useState('');
   const [activitytemp, setActivityTemp] = useState('');
   const [isFocus, setIsFocus] = useState(false);
@@ -34,15 +36,19 @@ function AddRemainder({modalVisible, setModalVisible}: any) {
   const showDatePicker = () => {
     setDatePickerVisible(true);
   };
-
+async function scheduleNotifications(remainder:TRemainder){
+  console.log(remainder);
+  if(remainder.category==="Daily"){
+    FromDailyNotification(remainder,date,petname,username);
+  }
+else if(remainder.category==="Weekly"){
+  FromWeeklyNotification(remainder,date,petname,username);
+}
+else{
+  FromMonthlyNotification(remainder,date,petname,username);
+}
+}
   async function handleAdd() {
-    const value3:TActivity={
-      name:activitytemp,
-      timePeriod:"6PM-8PM",
-     };
-     console.log(value3);
-      setActivity(value3);
-      setActivityName(activitytemp);
       const fromsend=from.getHours().toString().concat("-");
       const tosend=to.getHours().toString();
       const resultString=fromsend.concat(tosend);
@@ -56,9 +62,10 @@ function AddRemainder({modalVisible, setModalVisible}: any) {
       fromMinute: from.getMinutes(),
       toHour: to.getHours(),
       toMinute: to.getMinutes(),
+     
     };
     const result = await fetch(
-      `http://localhost:4000/pets/addRemainder/${username}/${petname}`,
+      `https://pet-buddy-backend.onrender.com/pets/addRemainder/${username}/${petname}`,
       {
         method: 'POST',
         headers: {
@@ -68,9 +75,9 @@ function AddRemainder({modalVisible, setModalVisible}: any) {
       },
     );
     if (result.ok) {
+     
       Alert.alert('Remainder added');
-      setTriggered(false);
-      onDisplayNotification(date, from.getHours(), from.getMinutes(),activitytemp,petname);
+      scheduleNotifications(value2); 
     }
     setModalVisible(false);
   }
