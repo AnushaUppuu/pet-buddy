@@ -1,5 +1,5 @@
 import { NavigationContainer } from "@react-navigation/native"
-import { render } from "@testing-library/react-native"
+import { render, waitFor } from "@testing-library/react-native"
 import Home from "../../src/screens/Home"
 import { createNativeStackNavigator } from "@react-navigation/native-stack"
 import FTIcon from 'react-native-vector-icons/Fontisto';
@@ -19,6 +19,8 @@ import notifee, {
     TimestampTrigger,
     TriggerType,
   } from '@notifee/react-native';
+import { GlobalContext, GlobalContextProvider } from "../../src/context/GlobalContext";
+import React, { useContext } from "react";
 jest.mock('@notifee/react-native', () => ({
    
     onForegroundEvent: jest.fn(),
@@ -55,10 +57,15 @@ global.fetch = jest.fn(() =>
   ) as jest.Mock;
 describe("Home component",()=>{
     it("render the elements correctly",()=>{
+   
         render(
             <NavigationContainer>
+                <GlobalContextProvider>
                 <Home/>
+                </GlobalContextProvider>
             </NavigationContainer>
         )
+      
+      
     })
 })
