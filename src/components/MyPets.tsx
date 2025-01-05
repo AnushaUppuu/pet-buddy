@@ -21,7 +21,7 @@ function MyPets() {
   useEffect(() => {
     async function fetching() {
       const result = await fetch(
-        `http://localhost:4000/pets/getAllPets/${username}`,
+        `https://pet-buddy-backend.onrender.com/pets/getAllPets/${username}`,
         {
           method: 'GET',
           headers: {
@@ -31,7 +31,7 @@ function MyPets() {
       );
       const value = await result.json();
       setPetData(value);
-      console.log(value);
+      // console.log(value);
     }
     fetching();
   }, []);
