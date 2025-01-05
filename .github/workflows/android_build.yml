@@ -26,5 +26,7 @@ jobs:
           cache: 'gradle'
       - name: Install dependencies
         run: npm install
+      -name: Run the tests
+       run: npm test  
       - name: Build on android
         run: npx react-native build-android
