@@ -1,13 +1,12 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {Linking, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {GlobalContext} from '../context/GlobalContext';
-// import Icon from 'react-native-vector-icons/AntDesign'
-// import Icon from 'react-native-vector-icons/FontAwesome';
 import {TPet} from '../types/TPet';
 import {Image} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 import IIcon from 'react-native-vector-icons/Ionicons';
+import AIcons from 'react-native-vector-icons/AntDesign';
 import Track from './Track';
 function Pet() {
   const {petname, username, setPetData} = useContext(GlobalContext);
@@ -18,7 +17,7 @@ function Pet() {
   useEffect(() => {
     async function fetching() {
       const result = await fetch(
-        `http://localhost:4000/pets/getSinglePet/${username}/${petname}`,
+        `https://pet-buddy-backend.onrender.com/pets/getSinglePet/${username}/${petname}`,
         {
           method: 'GET',
           headers: {
@@ -41,15 +40,22 @@ function Pet() {
         style={styles.backButton}
         onPress={() => nav.goBack()}
         testID="back-arrow">
-        <Text style={styles.backButtonText}>{'<'}</Text>
+        <Text style={styles.backButtonText}><AIcons name='left' size={20}/></Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.cameraIconButton}
+        testID="camera-button">
+        <Text style={styles.cameraIcon} ><IIcon name='camera-outline' size={30} color={'white'}/></Text>
       </TouchableOpacity>
       <View style={styles.generalDetails} testID="general-details">
         <View>
           <Text style={styles.name}>{petname}</Text>
           <Text style={styles.breedContact}>{petdatatemp?.breed}</Text>
+          <TouchableOpacity onPress={()=> {Linking.openURL(`tel:${petdatatemp?.emergencyContact}`);}}>
           <Text style={styles.breedContact}>
             {petdatatemp?.emergencyContact}
           </Text>
+          </TouchableOpacity>
         </View>
         <Image
           style={{width: 40, height: 40}}
@@ -88,7 +94,7 @@ function Pet() {
         </View>
       )}
       <TouchableOpacity style={{flex: 0.1}} onPress={()=>nav.navigate('Gallery')}>
-        <Text style={styles.galleryButton}>Gallery {'>'}</Text>
+        <Text style={styles.galleryButton}>Gallery <AIcons name='right' size={20}/> </Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={{flex: 0.1}}
@@ -158,6 +164,8 @@ const styles = StyleSheet.create({
     color: 'white',
     borderColor: 'limegreen',
     fontWeight: 'bold',
+    textAlign:"center",
+   
   },
   track: {
     borderWidth: 2,
@@ -210,5 +218,20 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
+  cameraIconButton:{
+    position:"absolute",
+    top:320,
+    left:320,
+    height:40,
+    width:40,
+    backgroundColor:"green",
+    textAlign:"center",
+    borderRadius:5,
+  },
+  cameraIcon:{
+    textAlign:"center",
+    alignSelf:"center",
+    padding:5,
+  }
 });
 export default Pet;
