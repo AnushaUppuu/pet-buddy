@@ -25,8 +25,14 @@ function SingInStack() {
         options={{
           headerShown: false,
           tabBarIcon: ({focused}) => (
-            <Icon name="home" size={20} color={focused ? 'white' : 'green'} />
+            <Icon name="home" testID='homeIcon' size={25} color={focused ? 'white' : 'green'} />
           ),
+          tabBarLabelStyle: {
+            fontSize: 14,
+            fontFamily: 'Georgia',
+            fontWeight: 300,
+            color:"green"
+          },
         }}
       />
       <Tab.Screen
@@ -36,12 +42,16 @@ function SingInStack() {
           tabBarIcon: ({focused}) => (
             <Icon2
               name="location-outline"
-              size={20}
+              size={25}
               color={focused ? 'white' : 'green'}
             />
-            //  const  url= focused?'https://cdn-icons-png.flaticon.com/512/25/25694.png
-            //     <Image />
           ),
+          tabBarLabelStyle: {
+            fontSize: 14,
+            fontFamily: 'Georgia',
+            fontWeight: 100,
+            color:"green"
+          },
         }}
       />
       <Tab.Screen
@@ -49,8 +59,15 @@ function SingInStack() {
         component={Training}
         options={{
           tabBarIcon: ({focused}) => (
-            <MIcon name="dog" size={20} color={focused ? 'white' : 'green'} />
+            <MIcon name="dog" size={25} color={focused ? 'white' : 'green'} />
           ),
+          tabBarLabelStyle: {
+            fontSize: 14,
+            fontFamily: 'Georgia',
+            fontWeight: 300,
+            color:"green"
+          },
+          tabBarActiveTintColor:"white"
         }}
       />
     </Tab.Navigator>
