@@ -6,15 +6,40 @@ import SingnedOutStack from './SingnedOutStack';
 import SingInStack from './SingInStack';
 const Stack = createNativeStackNavigator();
 import notifee, {EventType} from '@notifee/react-native';
+import Loading from '../components/Loading';
+import {Alert, Platform} from 'react-native';
 
 function Main(): React.JSX.Element {
-  const {triggered, setTriggered} = useContext(GlobalContext);
+  async function handleActivity(data:any){
+    const value={
+      name:data.activityname,
+      timePeriod:data.fromHour.toString().concat(data.toHour)
+    };
+    const result=await fetch(`https://pet-buddy-backend.onrender.com/pets/addActivity/${data.username}/${data.petname}`,{
+      method:"POST",
+      headers:{
+        'Content-Type':'application/json'
+      },
+      body:JSON.stringify(value)
+    })
+    if(result.ok){
+      Alert.alert('Add to the activity');
+    }
+    else{
+      Alert.alert('Not added');
+    }
+  }
   useEffect(() => {
     const notiFun = notifee.onForegroundEvent(async ({type, detail}) => {
-      if (type === EventType.PRESS) {
+      if (type === EventType.ACTION_PRESS) {
         console.log('User pressed the notification.');
-        console.log(detail);
-        setTriggered(true);
+        if (Platform.OS == 'android' && detail.pressAction?.id==="accept") {
+          console.log(detail.notification?.data);
+          handleActivity(detail.notification?.data);
+        } else if (Platform.OS == 'ios') {
+          console.log(detail);
+          handleActivity(detail.notification?.data)
+        }
       }
     });
     return () => {
@@ -27,6 +52,11 @@ function Main(): React.JSX.Element {
         <Stack.Screen
           name="SingnedOut"
           component={SingnedOutStack}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="Loading"
+          component={Loading}
           options={{headerShown: false}}
         />
         <Stack.Screen
