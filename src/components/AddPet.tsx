@@ -53,7 +53,7 @@ function AddPet() {
       profileImage: profile,
       username: username,
     };
-    const result = await fetch(`http://localhost:4000/pets/addPet`, {
+    const result = await fetch(`https://pet-buddy-backend.onrender.com/pets/addPet`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
