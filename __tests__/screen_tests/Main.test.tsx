@@ -4,12 +4,7 @@
 
 import 'react-native';
 import React from 'react';
-
-
-// Note: import explicitly to use the types shipped with jest.
 import {it} from '@jest/globals';
-
-// Note: test renderer must be required after react-native.
 import renderer from 'react-test-renderer';
 import {render} from '@testing-library/react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -23,7 +18,7 @@ import {Dropdown} from 'react-native-element-dropdown';
 import DatePicker from 'react-native-date-picker';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import YoutubePlayer from 'react-native-youtube-iframe';
 import Icon2 from 'react-native-vector-icons/Ionicons';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import notifee, {
@@ -31,6 +26,9 @@ import notifee, {
   TimestampTrigger,
   TriggerType,
 } from '@notifee/react-native';
+jest.mock('react-native-youtube-iframe',()=>({
+  YoutubePlayer:jest.fn()
+}))
 jest.mock('@react-navigation/native-stack', () => ({
   createNativeStackNavigator: jest.fn().mockImplementation(() => ({
     Navigator: jest.fn(),
@@ -49,10 +47,6 @@ jest.mock('react-native-image-crop-picker', () => ({
   ImageCropPicker: jest.fn(),
 }));
 jest.mock('@notifee/react-native', () => ({
-  // onBackgroundEvent: jest.fn(),
-  // EventType: {
-  //   ACTION_PRESS: 'action_press',
-  // },
   onForegroundEvent: jest.fn(),
   EventType: {
     ACTION_PRESS: 'action_press',
