@@ -15,9 +15,9 @@ function Profile() {
   const nav=useNavigation<any>();
   useEffect(()=>{
     async function fetching(){
-      let baseurl="http://localhost:4000";
+      let baseurl="https://pet-buddy-backend.onrender.com";
       if(Platform.OS==="android"){
-        baseurl="http://10.0.2.2:4000"
+        baseurl="https://pet-buddy-backend.onrender.com"
       }
       console.log(baseurl);
       const result=await fetch(`${baseurl}/users/getSingleUser/${username}`,{
