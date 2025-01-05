@@ -21,18 +21,20 @@ function Remainder() {
   const [showremainders, setShowRemainders] = useState<
     TRemainder[] | undefined
   >([]);
+ 
   useEffect(() => {
     if (petdata) {
-      const url2 = petdata.profileImage.toString();
+      const url2 = petdata.profileImage?.toString();
       console.log(petdata.profileImage);
       setUrl(url2);
     }
     setSelected('Daily');
+
   }, []);
   useEffect(() => {
     const value = petdata?.remainders?.filter(ele => ele.category == selected);
     setShowRemainders(value);
-    console.log(value);
+    // console.log(value);
   }, [selected]);
 
   return (
@@ -50,17 +52,17 @@ function Remainder() {
         <TouchableOpacity
           testID="Daily-button"
           onPress={() => setSelected('Daily')}>
-          <Text style={styles.dateButton}>Daily</Text>
+          <Text style={selected=="Daily"?styles.selectedButton:styles.dateButton}>Daily</Text>
         </TouchableOpacity>
         <TouchableOpacity
           testID="Weekly-button"
           onPress={() => setSelected('Weekly')}>
-          <Text style={styles.dateButton}>Weekly</Text>
+          <Text style={selected=="Weekly"?styles.selectedButton:styles.dateButton}>Weekly</Text>
         </TouchableOpacity>
         <TouchableOpacity
           testID="Monthly-button"
           onPress={() => setSelected('Monthly')}>
-          <Text style={styles.dateButton}>Monthly</Text>
+          <Text style={selected=="Monthly"?styles.selectedButton:styles.dateButton}>Monthly</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.flatListContainer} testID="flat-list-container">
@@ -159,5 +161,14 @@ const styles = StyleSheet.create({
     color: 'white',
     alignSelf: 'flex-end',
   },
+  selectedButton:{
+    borderWidth: 2,
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: 'green',
+    borderColor: 'green',
+    fontWeight: 'bold',
+    color: 'white', 
+  }
 });
 export default Remainder;
