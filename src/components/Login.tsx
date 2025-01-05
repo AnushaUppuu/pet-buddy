@@ -23,12 +23,10 @@ function Login() {
       password:password
     }
     async function handleLogin(){
-      let baseurl='http://localhost:4000';
-      if(Platform.OS=="android"){
-        baseurl="http://10.0.2.2:4000"
-      }
+      console.log("Triggered");
+       console.log(value);
        if(tempusername!=""|| password!=""){
-          const result=await fetch(`${baseurl}/users/login`,{
+          const result=await fetch(`https://pet-buddy-backend.onrender.com/users/login`,{
             method:"POST",
             headers:{
               "Content-Type":'application/json'

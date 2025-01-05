@@ -64,12 +64,9 @@ describe('Login component', () => {
       fireEvent.changeText(screen.getByTestId('password'), 'anu@123');
       fireEvent.press(screen.getByTestId('login-button'));
     });
-    let baseurl="http://localhost:4000";
-     if(Platform.OS=="android"){
-        baseurl="http://10.0.2.2:4000"
-     }
+    
     expect(global.fetch).toHaveBeenCalledWith(
-      `${baseurl}/users/login`,
+      `https://pet-buddy-backend.onrender.com/users/login`,
       {
         method: 'POST',
         headers: {
