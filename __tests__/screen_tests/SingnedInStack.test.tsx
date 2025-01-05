@@ -15,11 +15,15 @@ import notifee, {EventType, TimestampTrigger, TriggerType}  from '@notifee/react
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon2 from 'react-native-vector-icons/Ionicons';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import YoutubePlayer from 'react-native-youtube-iframe';
 jest.mock('@react-navigation/native-stack',()=>({
     createNativeStackNavigator:jest.fn().mockImplementation(()=>({
         Navigator:jest.fn(),
         Screen:jest.fn(),
     }))
+}))
+jest.mock('react-native-youtube-iframe',()=>({
+  YoutubePlayer:jest.fn()
 }))
 jest.mock('react-native-image-crop-picker',()=>({
   ImageCropPicker:jest.fn(),
