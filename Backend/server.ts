@@ -1,4 +1,4 @@
-import {connection} from './connection';
+import {DatabaseConnection} from './connection';
 import express from 'express';
 const app = express();
 import userRoutes from './routes/user_routes';
@@ -9,7 +9,7 @@ async function main() {
   app.use('/pets',petRoutes);
   if (process.env.NODE_ENV !== 'test') {
     try{
-      await connection();
+      await DatabaseConnection();
     }catch(e){
       console.log("Unable to connect",e);
       throw new Error("connection failed");
