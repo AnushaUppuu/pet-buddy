@@ -43,7 +43,7 @@ function Register() {
       if(password!=confirmpassword){
         Alert.alert("Check the password! it is not matching the confirm password");
       }
-      const result=await fetch(`http://localhost:4000/users/register`,{
+      const result=await fetch(`https://pet-buddy-backend.onrender.com/users/register`,{
         method:"POST",
         headers:{
           "Content-Type":"application/json"
@@ -65,8 +65,8 @@ function Register() {
   return (
     <View style={styles.maincontainer}>
       <TextInput onChangeText={setUsernameTemp} testID='username' placeholder="Username" style={styles.input} />
-      <TextInput onChangeText={setPassword} testID='password' style={styles.input} placeholder="Password" />
-      <TextInput onChangeText={setConfirmPassword} testID='confirm-password' style={styles.input} placeholder="ConfirmPassword" />
+      <TextInput onChangeText={setPassword} testID='password' style={styles.input} placeholder="Password" secureTextEntry={true} />
+      <TextInput onChangeText={setConfirmPassword} testID='confirm-password' style={styles.input} placeholder="ConfirmPassword" secureTextEntry={true}/>
       <TextInput onChangeText={setEmail} testID='email' style={styles.input} placeholder="Email Address" />
       <TextInput onChangeText={setPhoneNumber} testID='phone-number' style={styles.input} placeholder="Phone Number" />
       <TextInput onChangeText={setAddress} testID='address' style={styles.input} placeholder="Address" />
