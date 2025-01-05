@@ -21,7 +21,7 @@ import {Dropdown} from 'react-native-element-dropdown';
 import DatePicker from 'react-native-date-picker';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+import YoutubePlayer from 'react-native-youtube-iframe';
 import Icon2 from 'react-native-vector-icons/Ionicons';
 import MIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import notifee, {
@@ -36,6 +36,9 @@ jest.mock('@react-navigation/native-stack', () => ({
     Screen: jest.fn(),
   })),
 }));
+jest.mock('react-native-youtube-iframe',()=>({
+  YoutubePlayer:jest.fn()
+}))
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 jest.mock('@react-navigation/bottom-tabs', () => ({
   createBottomTabNavigator: jest.fn().mockImplementation(() => ({
